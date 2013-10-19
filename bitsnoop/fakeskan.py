@@ -3,9 +3,6 @@ import logging
 import json
 from datetime import datetime, timedelta
 
-from urllib2 import urlopen
-from urllib import urlencode
-
 import requests
 
 from bitsnoop.constant_type import Constants
