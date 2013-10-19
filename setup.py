@@ -16,5 +16,5 @@ setup(
     url='https://github.com/infothrill/python-bitsnoop',
     license='MIT License',
     description='Unofficial Python API for parts of bitsnoop.com',
-    long_description='Unofficial Python API for BitSnoop. Usage: https://github.com/infothrill/python-bitsnoop.',
+    long_description='Unofficial Python API for BitSnoop. Usage: https://github.com/infothrill/python-bitsnoop.'
 )
