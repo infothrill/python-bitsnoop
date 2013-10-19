@@ -98,7 +98,7 @@ def fakeskan(btih, url=FAKESKAN_URL):
 
 
 def main():
-    print fakeskan("DAAC7008E2E3A6E4321950C131690ACA20C5A08A")
+    print(fakeskan("DAAC7008E2E3A6E4321950C131690ACA20C5A08A"))
 
 
 if __name__ == '__main__':
