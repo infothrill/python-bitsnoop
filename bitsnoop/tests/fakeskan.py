@@ -4,11 +4,8 @@ import logging
 
 logging.basicConfig(level=logging.DEBUG, stream=sys.stdout)
 
-if sys.version_info >= (3, 0):
-    from tests.server import BitsnoopFakeSkanApp
-else:
-    from server import BitsnoopFakeSkanApp
-    from bitsnoop import fakeskan
+from bitsnoop import fakeskan
+from server import BitsnoopFakeSkanApp
 
 
 class FakeskanTestClass(unittest.TestCase):

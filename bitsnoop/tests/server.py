@@ -1,7 +1,11 @@
+import sys
 from time import sleep
 from multiprocessing import Process
 
 from bottle import Bottle, run, response, route, request
+
+if sys.version_info >= (3, 0):
+    unicode = str
 
 
 @route('/api/fakeskan.php')
@@ -12,9 +16,9 @@ def fakeskan():
     assert arg_json in ('0', '1')
     response.content_type = 'application/json; charset=utf-8'
     if arg_json == '1':
-        return u'"VERIFIED"'
+        return unicode('"VERIFIED"')
     else:
-        return u'VERIFIED'
+        return unicode("VERIFIED")
 
 
 class BitsnoopFakeSkanApp(Bottle):
