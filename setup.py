@@ -12,7 +12,7 @@ setup(
     author='Paul Kremer',
     author_email='',
     packages=['bitsnoop'],
-    test_suite='bitsnoop.tests',
+    test_suite='tests',
     url='https://github.com/infothrill/python-bitsnoop',
     license='MIT License',
     description='Unofficial Python API for parts of bitsnoop.com',
