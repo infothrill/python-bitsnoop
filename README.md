@@ -8,7 +8,7 @@ Installation
 	$ python setup.py install
 
     NOT AVAILABLE yet
-    ## $ pip install ThePirateBay
+    ## $ pip install pybitsnoop
 
 
 Python versions

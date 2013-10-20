@@ -6,7 +6,7 @@ except ImportError:
     from distutils.core import setup
 
 setup(
-    name='pybitsnoop',
+    name='bitsnoop',
     version='0.1',
     install_requires=['requests'],
     author='Paul Kremer',
