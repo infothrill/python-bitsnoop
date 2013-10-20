@@ -28,13 +28,14 @@ Usage
 	# since bitsnoop.com implements some form of rate limiting on queries,
 	# we provide a minimal caching interface:
 
+	from bitsnoop import FakeskanCached
 	cache = {}
 	fakeskan = FakeskanCached(cache=cache)
 	if fakeskan("43DBF6EBC059CD97ACAE7CAF308A0E050A7EC51A") == FAKESCAN.CODE.VERIFIED:
 		print("This torrent is verified!")
 
-	import shelve
 	# Alternatively, the cache can be a shelve object for example:
+	import shelve
 	cache = shelve.open("fakeskan")
 	fakeskan = FakeskanCached(cache=cache)
 	if fakeskan("43DBF6EBC059CD97ACAE7CAF308A0E050A7EC51A") == FAKESCAN.CODE.VERIFIED:
