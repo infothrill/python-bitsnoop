@@ -8,7 +8,7 @@ Installation
 	$ python setup.py install
 
     NOT AVAILABLE yet
-    ## $ pip install pybitsnoop
+    ## $ pip install bitsnoop
 
 
 Python versions
