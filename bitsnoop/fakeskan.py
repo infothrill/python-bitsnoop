@@ -36,7 +36,7 @@ class FAKESKAN(Constants):
         FAKE = "torrent is fake"
 
 
-class CachedFakeskan(object):
+class FakeskanCached(object):
     '''
     A little wrapper that allows caching of the fakeskan values.
     '''
@@ -52,9 +52,6 @@ class CachedFakeskan(object):
         self._cache = cache
         self._expiry = timedelta(seconds=expiry)
         self._url = url
-
-    def cache(self):
-        return dict(self._cache)
 
     def call(self, key):
         if key in self._cache:
@@ -79,6 +76,14 @@ class CachedFakeskan(object):
         return self.call(key)
 
 
+class Fakeskan(object):
+    def __init__(self, url=FAKESKAN_URL):
+        self._url = url
+
+    def __call__(self, key):
+        return fakeskan(key, self._url)
+
+
 def fakeskan(btih, url=FAKESKAN_URL):
     assert type(btih) in (str, unicode)
     assert len(btih) == 40, "Length of Bittorrent info hash should be 40 but isn't: '%s'" % btih
@@ -95,11 +100,3 @@ def fakeskan(btih, url=FAKESKAN_URL):
     r = requests.get(url, params={"hash": btih, "json": "1"}, headers=headers, timeout=120)
     assert r.headers['content-type'].find('application/json') >= 0, "Wrong content-type received: %s" % r.headers['content-type']
     return __FAKESKAN_MAP[json.loads(r.text)]
-
-
-def main():
-    print(fakeskan("DAAC7008E2E3A6E4321950C131690ACA20C5A08A"))
-
-
-if __name__ == '__main__':
-    sys.exit(main())

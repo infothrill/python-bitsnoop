@@ -1,1 +1,1 @@
-from .fakeskan import fakeskan, FAKESKAN, CachedFakeskan
+from .fakeskan import Fakeskan, FakeskanCached, FAKESKAN
