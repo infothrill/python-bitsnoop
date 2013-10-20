@@ -1,0 +1,4 @@
+.coverage
+# Packages
+*.egg
+*.egg-info
