@@ -5,7 +5,7 @@ import logging
 logging.basicConfig(level=logging.DEBUG, stream=sys.stdout)
 
 from bitsnoop import fakeskan
-from server import BitsnoopFakeSkanApp
+from .server import BitsnoopFakeSkanApp
 
 
 class FakeskanTestClass(unittest.TestCase):
