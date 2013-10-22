@@ -79,6 +79,12 @@ class FakeskanCached(object):
 
 
 class Fakeskan(object):
+    '''
+    A class to instantiate a fakeskan api client pointing to the optional
+    api URL. Essentially, this is functionally the same than
+       from functools import partial
+       fakeskan = partial(fakeskan, url=FAKESKAN_URL)
+    '''
     def __init__(self, url=FAKESKAN_URL):
         self._url = url
 
@@ -87,9 +93,15 @@ class Fakeskan(object):
 
 
 def fakeskan(btih, url=FAKESKAN_URL):
-    assert type(btih) in (str, unicode)
-    assert len(btih) == 40, "Length of Bittorrent info hash should be 40 but isn't: '%s'" % btih
-    __FAKESKAN_MAP = {
+    '''
+    Get the FAKESKAN.CODE for the given bittorrent info hash
+
+    :param btih: the string representation of a bittorent info hash
+    :param url: optional URL for the bitsnoop fakeskan API
+    '''
+    assert type(btih) in (str, unicode), "the provided bittorrent info hash must be a string, not %s!" % str(type(btih))
+    assert len(btih) == 40, "Length of bittorrent info hash should be 40 but isn't: '%s'" % btih
+    _fakeskan_map = {
         "ERROR": FAKESKAN.CODE.ERROR,
         "NOTFOUND": FAKESKAN.CODE.NOTFOUND,
         "VERIFIED": FAKESKAN.CODE.VERIFIED,
@@ -101,4 +113,4 @@ def fakeskan(btih, url=FAKESKAN_URL):
     headers = {'User-Agent': 'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)'}
     r = requests.get(url, params={"hash": btih, "json": "1"}, headers=headers, timeout=120)
     assert r.headers['content-type'].find('application/json') >= 0, "Wrong content-type received: %s" % r.headers['content-type']
-    return __FAKESKAN_MAP[json.loads(r.text)]
+    return _fakeskan_map[json.loads(r.text)]
