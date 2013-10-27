@@ -1,23 +1,42 @@
-Unofficial Python API for [BitSnoop](http://www.bitsnoop.com/).
+bitsnoop - Unofficial Python API for [BitSnoop](http://www.bitsnoop.com/)
+==========================================================================
 
-[![Build Status](https://travis-ci.org/infothrill/python-bitsnoop.png)](https://travis-ci.org/infothrill/python-bitsnoop)    [![Coverage Status](https://coveralls.io/repos/infothrill/python-bitsnoop/badge.png)](https://coveralls.io/r/infothrill/python-bitsnoop)
+
+.. image:: https://travis-ci.org/infothrill/python-bitsnoop.png
+    :target: https://travis-ci.org/infothrill/python-bitsnoop
+
+.. image:: https://coveralls.io/repos/infothrill/python-bitsnoop/badge.png
+        :target: https://coveralls.io/r/infothrill/python-bitsnoop
+
+.. image:: https://badge.fury.io/py/bitsnoop.png
+    :target: http://badge.fury.io/py/bitsnoop
+
+.. image:: https://pypip.in/d/bitsnoop/badge.png
+        :target: https://crate.io/packages/bitsnoop/
+
 
 Installation
 =============
 
+.. code-block:: bash
+
 	$ python setup.py install
 
-    NOT AVAILABLE yet
-    ## $ pip install bitsnoop
+.. code-block:: bash
+
+    NOT AVAILABLE yet!
+    $ pip install bitsnoop
 
 
-Python versions
-===============
+Requirements
+============
 Currently python 2.7, 3.2 and 3.3
 
 
 Usage
 =====
+.. code-block:: python
+
 	from bitsnoop import Fakeskan, FAKESCAN
 
 	fakeskan = Fakeskan()  # create a fakeskan object with default URL
