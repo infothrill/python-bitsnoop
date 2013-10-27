@@ -1,6 +1,5 @@
-bitsnoop - Unofficial Python API for [BitSnoop](http://www.bitsnoop.com/)
+bitsnoop - Unofficial Python API for `BitSnoop <http://www.bitsnoop.com/>`_ 
 ==========================================================================
-
 
 .. image:: https://travis-ci.org/infothrill/python-bitsnoop.png
     :target: https://travis-ci.org/infothrill/python-bitsnoop
