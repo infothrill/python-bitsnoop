@@ -21,7 +21,12 @@ class FakeskanTestClass(unittest.TestCase):
         cls.url = "http://localhost:8000/api/fakeskan.php"
         cls.server.start()
 
-    def test_fakeskan(self):
+    def test_fakeskan_input_validation(self):
+        fk = fakeskan.Fakeskan(self.url)
+        self.assertRaises(ValueError, fk, "sdsdg")
+        self.assertRaises(ValueError, fk, None)
+
+    def test_fakeskan_connections(self):
         fk = fakeskan.Fakeskan(self.url)
         test_data = {
                        "03DBF6EBC059CD97ACAE7CAF308A0E050A7EC51A": fakeskan.ERROR,
