@@ -44,29 +44,27 @@ class Fakeskan(object):
         self._url = url
 
     def _cached_call(self, key):
-        if key in self._cache:
-            dummycode, dt = self._cache[key]
-            if datetime.now() - dt > self._cache_expiry:
-                logger.debug("expire fakeskan cache for '%s'!", key)
-                self._cache[key] = (fakeskan(key), datetime.now())
-            else:
-                pass
-                # logging.info("cache hit!")
+        now = datetime.now()
+        try:
+            code, cachedt = self._cache[key]
+        except KeyError:
+            code = None
         else:
-            logger.info("no fakeskan cache for '%s': querying!", key)
-            self._cache[key] = (fakeskan(key), datetime.now())
-        entry = self._cache[key]
-        if entry[0] == ERROR:
-            # don't cache errors
-            del self._cache[key]
-            return entry
-        return self._cache[key][0]
+            if now - cachedt > self._cache_expiry:
+                logger.debug("expiring fakeskan cache for '%s'!", key)
+                code = None
+        finally:
+            if code is None:
+                code = fakeskan(key, self._url)
+            if code is not ERROR:
+                self._cache[key] = (code, now)
+        return code
 
     def __call__(self, key):
-        if self._cache:
-            return self._cached_call(key)
-        else:
+        if self._cache is None:
             return fakeskan(key, self._url)
+        else:
+            return self._cached_call(key)
 
 
 def fakeskan(btih, url=FAKESKAN_URL):

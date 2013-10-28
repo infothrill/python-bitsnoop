@@ -11,7 +11,7 @@ from bitsnoop import fakeskan
 from .server import BitsnoopFakeSkanApp
 
 
-class FakeskanTestClass(unittest.TestCase):
+class FakeskanServerTestClass(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         """
@@ -40,6 +40,47 @@ class FakeskanTestClass(unittest.TestCase):
         for key in test_data:
             self.assertEqual(test_data[key], fk(key))
 
+    def test_fakeskan_cachefill(self):
+        # test if we actually fill the cache
+        cache_expiry = 10
+        cache = {}
+        fk = fakeskan.Fakeskan(url=self.url, cache=cache, cache_expiry=cache_expiry)
+        result = fk("33DBF6EBC059CD97ACAE7CAF308A0E050A7EC51A")
+        self.assertEqual(fakeskan.GOOD, result)
+        self.assertEqual(1, len(cache))
+
+    def test_fakeskan_cachehit(self):
+        # test if we hit a cache result
+        cache_expiry = 10
+        cache = {
+                 "99DBF6EBC059CD97ACAE7CAF308A0E050A7EC51A":
+                    (fakeskan.BAD, datetime.datetime.now() - datetime.timedelta(seconds=3))
+                 }
+        fk = fakeskan.Fakeskan(url=self.url, cache=cache, cache_expiry=cache_expiry)
+        result = fk("99DBF6EBC059CD97ACAE7CAF308A0E050A7EC51A")
+        self.assertEqual(fakeskan.BAD, result)
+        self.assertEqual(1, len(cache))
+
+    def test_fakeskan_cache_expiry(self):
+        # test if we get cache expiration
+        cache_expiry = 1
+        cache = {
+                 "33DBF6EBC059CD97ACAE7CAF308A0E050A7EC51A":
+                    (fakeskan.ERROR, datetime.datetime.now() - datetime.timedelta(seconds=3))
+                 }
+        fk = fakeskan.Fakeskan(url=self.url, cache=cache, cache_expiry=cache_expiry)
+        result = fk("33DBF6EBC059CD97ACAE7CAF308A0E050A7EC51A")
+        self.assertEqual(fakeskan.GOOD, result)
+        self.assertEqual(1, len(cache))
+
+    def test_fakeskan_dontcache_errors(self):
+        # make sure errors are not cached
+        cache = {}
+        fk = fakeskan.Fakeskan(url=self.url, cache=cache)
+        result = fk("03DBF6EBC059CD97ACAE7CAF308A0E050A7EC51A")
+        self.assertEqual(fakeskan.ERROR, result)
+        self.assertEqual(0, len(cache))
+
     @classmethod
     def tearDownClass(cls):
         """
@@ -48,7 +89,7 @@ class FakeskanTestClass(unittest.TestCase):
         cls.server.stop()
 
 
-class FakeskanCachedTestClass(unittest.TestCase):
+class FakeskanNoServerTestClass(unittest.TestCase):
     def test_fakeskan_cache(self):
         # this will effectively test if we get a valid result without
         # ever making any http connections
