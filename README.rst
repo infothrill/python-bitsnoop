@@ -29,7 +29,7 @@ Installation
 
 Requirements
 ============
-Currently python 2.7, 3.2 and 3.3
+Currently python 2.7, 3.1, 3.2 and 3.3
 
 
 Usage
