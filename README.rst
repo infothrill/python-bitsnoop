@@ -36,27 +36,27 @@ Usage
 =====
 .. code-block:: python
 
-	from bitsnoop import Fakeskan, FAKESCAN
+	from bitsnoop import fakeskan
 
-	fakeskan = Fakeskan()  # create a fakeskan object with default URL
+	fk = fakeskan.Fakeskan()  # create a fakeskan object with default URL
 
-	if fakeskan("43DBF6EBC059CD97ACAE7CAF308A0E050A7EC51A") == FAKESCAN.CODE.VERIFIED:
+	if fk("43DBF6EBC059CD97ACAE7CAF308A0E050A7EC51A") == fakeskan.VERIFIED:
 		print("This torrent is verified!")
 
 	# since bitsnoop.com implements some form of rate limiting on queries,
 	# we provide a minimal caching interface:
 
-	from bitsnoop import FakeskanCached
+	from bitsnoop import fakeskan
 	cache = {}
-	fakeskan = FakeskanCached(cache=cache)
-	if fakeskan("43DBF6EBC059CD97ACAE7CAF308A0E050A7EC51A") == FAKESCAN.CODE.VERIFIED:
+	fk = fakeskan.FakeskanCached(cache=cache)
+	if fk("43DBF6EBC059CD97ACAE7CAF308A0E050A7EC51A") == fakeskan.VERIFIED:
 		print("This torrent is verified!")
 
 	# Alternatively, the cache can be a shelve object for example:
 	import shelve
 	cache = shelve.open("fakeskan")
-	fakeskan = FakeskanCached(cache=cache)
-	if fakeskan("43DBF6EBC059CD97ACAE7CAF308A0E050A7EC51A") == FAKESCAN.CODE.VERIFIED:
+	fk = fakeskan.FakeskanCached(cache=cache)
+	if fk("43DBF6EBC059CD97ACAE7CAF308A0E050A7EC51A") == fakeskan.VERIFIED:
 		print("This torrent is verified!")
 	# beware of thread-seafety with the cache object. shelve is a toy!
 

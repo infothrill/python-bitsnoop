@@ -7,7 +7,7 @@ import datetime
 
 logging.basicConfig(level=logging.DEBUG, stream=sys.stdout)
 
-from bitsnoop import Fakeskan, FakeskanCached, FAKESKAN
+from bitsnoop import fakeskan
 from .server import BitsnoopFakeSkanApp
 
 
@@ -22,18 +22,18 @@ class FakeskanTestClass(unittest.TestCase):
         cls.server.start()
 
     def test_fakeskan(self):
-        fakeskan = Fakeskan(self.url)
+        fk = fakeskan.Fakeskan(self.url)
         test_data = {
-                       "03DBF6EBC059CD97ACAE7CAF308A0E050A7EC51A": FAKESKAN.CODE.ERROR,
-                       "13DBF6EBC059CD97ACAE7CAF308A0E050A7EC51A": FAKESKAN.CODE.NOTFOUND,
-                       "23DBF6EBC059CD97ACAE7CAF308A0E050A7EC51A": FAKESKAN.CODE.VERIFIED,
-                       "33DBF6EBC059CD97ACAE7CAF308A0E050A7EC51A": FAKESKAN.CODE.GOOD,
-                       "43DBF6EBC059CD97ACAE7CAF308A0E050A7EC51A": FAKESKAN.CODE.NONE,
-                       "53DBF6EBC059CD97ACAE7CAF308A0E050A7EC51A": FAKESKAN.CODE.BAD,
-                       "63DBF6EBC059CD97ACAE7CAF308A0E050A7EC51A": FAKESKAN.CODE.FAKE,
+                       "03DBF6EBC059CD97ACAE7CAF308A0E050A7EC51A": fakeskan.ERROR,
+                       "13DBF6EBC059CD97ACAE7CAF308A0E050A7EC51A": fakeskan.NOTFOUND,
+                       "23DBF6EBC059CD97ACAE7CAF308A0E050A7EC51A": fakeskan.VERIFIED,
+                       "33DBF6EBC059CD97ACAE7CAF308A0E050A7EC51A": fakeskan.GOOD,
+                       "43DBF6EBC059CD97ACAE7CAF308A0E050A7EC51A": fakeskan.NONE,
+                       "53DBF6EBC059CD97ACAE7CAF308A0E050A7EC51A": fakeskan.BAD,
+                       "63DBF6EBC059CD97ACAE7CAF308A0E050A7EC51A": fakeskan.FAKE,
                        }
         for key in test_data:
-            self.assertEqual(test_data[key], fakeskan(key))
+            self.assertEqual(test_data[key], fk(key))
 
     @classmethod
     def tearDownClass(cls):
@@ -49,8 +49,8 @@ class FakeskanCachedTestClass(unittest.TestCase):
         # ever making any http connections
         cache = {
                  "43DBF6EBC059CD97ACAE7CAF308A0E050A7EC51A":
-                    (FAKESKAN.CODE.GOOD, datetime.datetime.now())
+                    (fakeskan.GOOD, datetime.datetime.now())
                  }
-        fakeskan = FakeskanCached(cache, url="http://nonexistant.example.com/")
-        result = fakeskan("43DBF6EBC059CD97ACAE7CAF308A0E050A7EC51A")
-        self.assertEqual(FAKESKAN.CODE.GOOD, result)
+        fk = fakeskan.FakeskanCached(cache, url="http://nonexistant.example.com/")
+        result = fk("43DBF6EBC059CD97ACAE7CAF308A0E050A7EC51A")
+        self.assertEqual(fakeskan.GOOD, result)

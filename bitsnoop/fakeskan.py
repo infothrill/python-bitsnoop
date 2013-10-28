@@ -7,8 +7,6 @@ from datetime import datetime, timedelta
 
 import requests
 
-from bitsnoop.constant_type import Constants
-
 
 if sys.version_info >= (3, 0):
     unicode = str
@@ -18,24 +16,21 @@ else:
 FAKESKAN_URL = "http://bitsnoop.com/api/fakeskan.php"
 
 
-class FAKESKAN(Constants):
-    class CODE:
-        ERROR = 0
-        NOTFOUND = 1
-        VERIFIED = 2
-        GOOD = 3
-        NONE = 4
-        BAD = 5
-        FAKE = 6
+ERROR = 0
+NOTFOUND = 1
+VERIFIED = 2
+GOOD = 3
+NONE = 4
+BAD = 5
+FAKE = 6
 
-    class DESCRIPTION:
-        ERROR = "hash not specified or internal error has occured. If you did specify hash, retry request in 10-15 minutes"
-        NOTFOUND = "torrent does not exist in index"
-        VERIFIED = "torrent is verified"
-        GOOD = "torrent has some 'good' votes, not verified yet"
-        NONE = "no votes or too little of them to decide"
-        BAD = "some 'bad' votes, not fake yet"
-        FAKE = "torrent is fake"
+ERROR_DESCRIPTION = "hash not specified or internal error has occured. If you did specify hash, retry request in 10-15 minutes"
+NOTFOUND_DESCRIPTION = "torrent does not exist in index"
+VERIFIED_DESCRIPTION = "torrent is verified"
+GOOD_DESCRIPTION = "torrent has some 'good' votes, not verified yet"
+NONE_DESCRIPTION = "no votes or too little of them to decide"
+BAD_DESCRIPTION = "some 'bad' votes, not fake yet"
+FAKE_DESCRIPTION = "torrent is fake"
 
 
 class FakeskanCached(object):
@@ -68,7 +63,7 @@ class FakeskanCached(object):
             logging.info("no fakeskan cache for '%s': querying!", key)
             self._cache[key] = (fakeskan(key), datetime.now())
         entry = self._cache[key]
-        if entry[0] == FAKESKAN.CODE.ERROR:
+        if entry[0] == ERROR:
             # don't cache errors
             del self._cache[key]
             return entry
@@ -84,6 +79,7 @@ class Fakeskan(object):
     api URL. Essentially, this is functionally the same than
        from functools import partial
        fakeskan = partial(fakeskan, url=FAKESKAN_URL)
+    but doesn't suffer from implementation issues
     '''
     def __init__(self, url=FAKESKAN_URL):
         self._url = url
@@ -102,13 +98,13 @@ def fakeskan(btih, url=FAKESKAN_URL):
     assert type(btih) in (str, unicode), "the provided bittorrent info hash must be a string, not %s!" % str(type(btih))
     assert len(btih) == 40, "Length of bittorrent info hash should be 40 but isn't: '%s'" % btih
     _fakeskan_map = {
-        "ERROR": FAKESKAN.CODE.ERROR,
-        "NOTFOUND": FAKESKAN.CODE.NOTFOUND,
-        "VERIFIED": FAKESKAN.CODE.VERIFIED,
-        "GOOD": FAKESKAN.CODE.GOOD,
-        "NONE": FAKESKAN.CODE.NONE,
-        "BAD": FAKESKAN.CODE.BAD,
-        "FAKE": FAKESKAN.CODE.FAKE,
+        "ERROR": ERROR,
+        "NOTFOUND": NOTFOUND,
+        "VERIFIED": VERIFIED,
+        "GOOD": GOOD,
+        "NONE": NONE,
+        "BAD": BAD,
+        "FAKE": FAKE,
     }
     headers = {'User-Agent': 'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)'}
     r = requests.get(url, params={"hash": btih, "json": "1"}, headers=headers, timeout=120)
