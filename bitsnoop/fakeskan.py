@@ -1,17 +1,12 @@
 # -*- coding: utf-8 -*-
 
-import sys
 import logging
 import json
 from datetime import datetime, timedelta
 
 import requests
 
-
-if sys.version_info >= (3, 0):
-    unicode = str
-else:
-    pass
+logger = logging.getLogger(__name__)
 
 FAKESKAN_URL = "http://bitsnoop.com/api/fakeskan.php"
 
@@ -54,13 +49,13 @@ class FakeskanCached(object):
         if key in self._cache:
             dummycode, dt = self._cache[key]
             if datetime.now() - dt > self._expiry:
-                logging.debug("expire fakeskan cache for '%s'!", key)
+                logger.debug("expire fakeskan cache for '%s'!", key)
                 self._cache[key] = (fakeskan(key), datetime.now())
             else:
                 pass
                 # logging.info("cache hit!")
         else:
-            logging.info("no fakeskan cache for '%s': querying!", key)
+            logger.info("no fakeskan cache for '%s': querying!", key)
             self._cache[key] = (fakeskan(key), datetime.now())
         entry = self._cache[key]
         if entry[0] == ERROR:
@@ -95,8 +90,10 @@ def fakeskan(btih, url=FAKESKAN_URL):
     :param btih: the string representation of a bittorent info hash
     :param url: optional URL for the bitsnoop fakeskan API
     '''
-    assert type(btih) in (str, unicode), "the provided bittorrent info hash must be a string, not %s!" % str(type(btih))
-    assert len(btih) == 40, "Length of bittorrent info hash should be 40 but isn't: '%s'" % btih
+    if not isinstance(btih, str):
+        raise ValueError("the provided info hash must be a string, not %s!" % str(type(btih)))
+    if len(btih) != 40:
+        raise ValueError("Length of info hash must be 40 but isn't: '%r'" % btih)
     _fakeskan_map = {
         "ERROR": ERROR,
         "NOTFOUND": NOTFOUND,
