@@ -51,6 +51,6 @@ class FakeskanCachedTestClass(unittest.TestCase):
                  "43DBF6EBC059CD97ACAE7CAF308A0E050A7EC51A":
                     (fakeskan.GOOD, datetime.datetime.now())
                  }
-        fk = fakeskan.FakeskanCached(cache, url="http://nonexistant.example.com/")
+        fk = fakeskan.Fakeskan(cache=cache, url="http://nonexistant.example.com/")
         result = fk("43DBF6EBC059CD97ACAE7CAF308A0E050A7EC51A")
         self.assertEqual(fakeskan.GOOD, result)

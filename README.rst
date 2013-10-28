@@ -49,9 +49,9 @@ we provide a minimal caching interface:
 
 .. code-block:: python
 
-	cache = {}
+	dictcache = {}
 
-	fk = fakeskan.FakeskanCached(cache=cache)
+	fk = fakeskan.Fakeskan(cache=dictcache, cache_expiry=120)
 
 	if fk("43DBF6EBC059CD97ACAE7CAF308A0E050A7EC51A") == fakeskan.VERIFIED:
 		print("This torrent is verified!")

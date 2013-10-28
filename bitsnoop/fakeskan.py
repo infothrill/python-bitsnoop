@@ -28,27 +28,25 @@ BAD_DESCRIPTION = "some 'bad' votes, not fake yet"
 FAKE_DESCRIPTION = "torrent is fake"
 
 
-class FakeskanCached(object):
+class Fakeskan(object):
     '''
-    A little wrapper that allows caching of the fakeskan values.
+    A class to instantiate a fakeskan api client pointing to the optional
+    api URL.
     '''
-    def __init__(self, cache=None, expiry=86400, url=FAKESKAN_URL):
+    def __init__(self, url=FAKESKAN_URL, cache=None, cache_expiry=86400):
         '''
-        Constructor
-        :param cache: anything that implements a dict style interface
-        :param expiry: number of seconds until cache entries are expired
         :param url: the URL of the fakeskan service
+        :param cache: anything that implements a dict style interface
+        :param cache_expiry: number of seconds until cache entries are expired
         '''
-        if cache is None:
-            cache = {}
         self._cache = cache
-        self._expiry = timedelta(seconds=expiry)
+        self._cache_expiry = timedelta(seconds=cache_expiry)
         self._url = url
 
-    def call(self, key):
+    def _cached_call(self, key):
         if key in self._cache:
             dummycode, dt = self._cache[key]
-            if datetime.now() - dt > self._expiry:
+            if datetime.now() - dt > self._cache_expiry:
                 logger.debug("expire fakeskan cache for '%s'!", key)
                 self._cache[key] = (fakeskan(key), datetime.now())
             else:
@@ -65,22 +63,10 @@ class FakeskanCached(object):
         return self._cache[key][0]
 
     def __call__(self, key):
-        return self.call(key)
-
-
-class Fakeskan(object):
-    '''
-    A class to instantiate a fakeskan api client pointing to the optional
-    api URL. Essentially, this is functionally the same than
-       from functools import partial
-       fakeskan = partial(fakeskan, url=FAKESKAN_URL)
-    but doesn't suffer from implementation issues
-    '''
-    def __init__(self, url=FAKESKAN_URL):
-        self._url = url
-
-    def __call__(self, key):
-        return fakeskan(key, self._url)
+        if self._cache:
+            return self._cached_call(key)
+        else:
+            return fakeskan(key, self._url)
 
 
 def fakeskan(btih, url=FAKESKAN_URL):
