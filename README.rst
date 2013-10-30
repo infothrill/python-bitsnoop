@@ -14,22 +14,10 @@ bitsnoop - Unofficial Python API for `BitSnoop <http://www.bitsnoop.com/>`_
         :target: https://crate.io/packages/bitsnoop/
 
 
-Installation
-=============
+Currently implemented:
 
-.. code-block:: bash
-
-	$ python setup.py install
-
-.. code-block:: bash
-
-    NOT AVAILABLE yet!
-    $ pip install bitsnoop
-
-
-Requirements
-============
-Currently python 2.7, 3.1, 3.2 and 3.3
+A001 — FakeSkan status of torrent
+    module bitsnoop.fakeskan
 
 
 Usage
@@ -59,6 +47,24 @@ we provide a minimal caching interface:
 
 The cache object is treated like a dictionary and can thus also be an object
 that implements persistency (like shelve).
+
+
+Installation
+=============
+
+.. code-block:: bash
+
+    $ python setup.py install
+
+.. code-block:: bash
+
+    NOT AVAILABLE yet!
+    $ pip install bitsnoop
+
+
+Requirements
+============
+Currently python 2.7, 3.1, 3.2 and 3.3
 
 
 Contribute
