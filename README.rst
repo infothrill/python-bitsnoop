@@ -1,5 +1,5 @@
-bitsnoop - Unofficial Python API for `BitSnoop <http://www.bitsnoop.com/>`_ 
-==========================================================================
+bitsnoop - Unofficial Python API for `BitSnoop <http://www.bitsnoop.com/>`_
+===========================================================================
 
 .. image:: https://travis-ci.org/infothrill/python-bitsnoop.png
     :target: https://travis-ci.org/infothrill/python-bitsnoop
@@ -7,12 +7,9 @@ bitsnoop - Unofficial Python API for `BitSnoop <http://www.bitsnoop.com/>`_
 .. image:: https://coveralls.io/repos/infothrill/python-bitsnoop/badge.png
         :target: https://coveralls.io/r/infothrill/python-bitsnoop
 
-.. image:: https://badge.fury.io/py/bitsnoop.png
-    :target: http://badge.fury.io/py/bitsnoop
-
-.. image:: https://pypip.in/d/bitsnoop/badge.png
-        :target: https://crate.io/packages/bitsnoop/
-
+.. image:: https://requires.io/github/infothrill/python-bitsnoop/requirements.png?branch=master
+   :target: https://requires.io/github/infothrill/python-bitsnoop/requirements/?branch=master
+   :alt: Requirements Status
 
 Currently implemented:
 
@@ -50,7 +47,7 @@ that implements persistency (like shelve).
 
 
 Installation
-=============
+============
 
 .. code-block:: bash
 
