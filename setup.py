@@ -36,5 +36,5 @@ setup(
     install_requires=['requests'],
     classifiers=classifiers,
     test_suite='bitsnoop.tests',
-    tests_require=['bottle==0.12.5'],
+    tests_require=['bottle==0.12.6'],
 )
