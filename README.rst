@@ -59,11 +59,6 @@ Installation
     $ pip install bitsnoop
 
 
-Requirements
-============
-Currently python 2.7, 3.1, 3.2 and 3.3
-
-
 Contribute
 ==========
 
