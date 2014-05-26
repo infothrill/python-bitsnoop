@@ -89,5 +89,5 @@ def fakeskan(btih, url=FAKESKAN_URL):
     }
     headers = {'User-Agent': 'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)'}
     r = requests.get(url, params={"hash": btih, "json": "1"}, headers=headers, timeout=120)
-    assert r.headers['content-type'].find('application/json') >= 0, "Wrong content-type received: %s" % r.headers['content-type']
+    assert r.headers['content-type'].find('application/json') >= 0, "Wrong content-type received: '%s'" % r.headers['content-type']
     return _fakeskan_map[json.loads(r.text)]

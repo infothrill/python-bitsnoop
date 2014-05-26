@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import unittest
+import os
 import sys
 import logging
 import datetime
@@ -15,8 +16,12 @@ class FakeskanServerTestClass(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         """
-        Start local server
+        Start local server in clean environment
         """
+        # remove proxy environment variables for this test
+        for env_var in ('HTTP_PROXY', 'HTTPS_PROXY', 'http_proxy', 'https_proxy'):
+            if env_var in os.environ:
+                del os.environ[env_var]
         cls.server = BitsnoopFakeSkanApp('localhost', 8000)
         cls.url = "http://localhost:8000/api/fakeskan.php"
         cls.server.start()
