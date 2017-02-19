@@ -1,8 +1,10 @@
 .coverage
 # Packages
 *.egg
+.eggs
 *.egg-info
 dist
 build
 __pycache__
 venv
+env
