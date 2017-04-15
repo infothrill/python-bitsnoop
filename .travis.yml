@@ -1,14 +1,9 @@
 language: python
 python:
     - "2.7"
-#    - "3.2" https://pypi.python.org/pypi/coverage/4.3.4 does not support python3.2
     - "3.3"
     - "3.4"
+    - "3.5"
     - "pypy"
-install: 
-    - "python setup.py install"
-#    - "pip install -r tests/requirements.txt --use-mirrors"
-    - "pip install coveralls"
-script: "coverage run --source=bitsnoop setup.py test"
-after_success: "coveralls"
-#after_success: "git checkout master && git merge --ff-only development && git push"
+install: pip install tox-travis
+script: tox

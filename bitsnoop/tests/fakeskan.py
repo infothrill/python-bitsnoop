@@ -6,10 +6,10 @@ import sys
 import logging
 import datetime
 
-logging.basicConfig(level=logging.DEBUG, stream=sys.stdout)
-
 from bitsnoop import fakeskan
 from .server import BitsnoopFakeSkanApp
+
+logging.basicConfig(level=logging.DEBUG, stream=sys.stdout)
 
 
 class FakeskanServerTestClass(unittest.TestCase):
@@ -59,7 +59,7 @@ class FakeskanServerTestClass(unittest.TestCase):
         cache_expiry = 10
         cache = {
                  "99DBF6EBC059CD97ACAE7CAF308A0E050A7EC51A":
-                    (fakeskan.BAD, datetime.datetime.now() - datetime.timedelta(seconds=3))
+                 (fakeskan.BAD, datetime.datetime.now() - datetime.timedelta(seconds=3))
                  }
         fk = fakeskan.Fakeskan(url=self.url, cache=cache, cache_expiry=cache_expiry)
         result = fk("99DBF6EBC059CD97ACAE7CAF308A0E050A7EC51A")
@@ -71,7 +71,7 @@ class FakeskanServerTestClass(unittest.TestCase):
         cache_expiry = 1
         cache = {
                  "33DBF6EBC059CD97ACAE7CAF308A0E050A7EC51A":
-                    (fakeskan.ERROR, datetime.datetime.now() - datetime.timedelta(seconds=3))
+                 (fakeskan.ERROR, datetime.datetime.now() - datetime.timedelta(seconds=3))
                  }
         fk = fakeskan.Fakeskan(url=self.url, cache=cache, cache_expiry=cache_expiry)
         result = fk("33DBF6EBC059CD97ACAE7CAF308A0E050A7EC51A")
@@ -100,8 +100,8 @@ class FakeskanNoServerTestClass(unittest.TestCase):
         # ever making any http connections
         cache = {
                  "43DBF6EBC059CD97ACAE7CAF308A0E050A7EC51A":
-                    (fakeskan.GOOD, datetime.datetime.now())
-                 }
+                 (fakeskan.GOOD, datetime.datetime.now())
+                }
         fk = fakeskan.Fakeskan(cache=cache, url="http://nonexistant.example.com/")
         result = fk("43DBF6EBC059CD97ACAE7CAF308A0E050A7EC51A")
         self.assertEqual(fakeskan.GOOD, result)

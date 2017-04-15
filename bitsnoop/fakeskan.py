@@ -19,7 +19,8 @@ NONE = 4
 BAD = 5
 FAKE = 6
 
-ERROR_DESCRIPTION = "hash not specified or internal error has occured. If you did specify hash, retry request in 10-15 minutes"
+ERROR_DESCRIPTION = "hash not specified or internal error has occured."
+ERROR_DESCRIPTION += " If you did specify hash, retry request in 10-15 minutes"
 NOTFOUND_DESCRIPTION = "torrent does not exist in index"
 VERIFIED_DESCRIPTION = "torrent is verified"
 GOOD_DESCRIPTION = "torrent has some 'good' votes, not verified yet"
@@ -89,5 +90,6 @@ def fakeskan(btih, url=FAKESKAN_URL):
     }
     headers = {'User-Agent': 'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)'}
     r = requests.get(url, params={"hash": btih, "json": "1"}, headers=headers, timeout=120)
-    assert r.headers['content-type'].find('application/json') >= 0, "Wrong content-type received: '%s'" % r.headers['content-type']
+    assert r.headers['content-type'].find('application/json') >= 0, \
+        "Wrong content-type received: '%s'" % r.headers['content-type']
     return _fakeskan_map[json.loads(r.text)]
